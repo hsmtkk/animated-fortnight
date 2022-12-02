@@ -7,7 +7,7 @@ import * as path from 'path';
 
 const project = 'animated-fortnight';
 const region = 'asia-northeast1';
-//const repository = 'fluffy-carnival';
+const repository = 'animated-fortnight';
 
 class MyStack extends TerraformStack {
   constructor(scope: Construct, id: string) {
@@ -63,9 +63,15 @@ class MyStack extends TerraformStack {
   
     }
 
-    new google.workflowsWorkflow.WorkflowsWorkflow(this, 'my_workflow', {
-      name: 'my-workflow',
-      serviceAccount: my_service_account.id,
+    new google.cloudbuildTrigger.CloudbuildTrigger(this, 'my_build_trigger', {
+      filename: 'cloudbuild.yaml',
+      github: {
+        owner: 'hsmtkk',
+        name: repository,
+        push: {
+          branch: 'main',
+        },
+      },
     });
 
   }

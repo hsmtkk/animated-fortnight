@@ -1,0 +1,14 @@
+- randomgen_function:
+    call: http.get
+    args:
+        url: var_randomgen_url
+    result: randomgen_result
+- multiply_function:
+    call: http.post
+    args:
+        url: var_multiply_url
+        body:
+            input: ${randomgen_result.body.random}
+    result: multiply_result
+- return_result:
+    return: ${multiply_result}
