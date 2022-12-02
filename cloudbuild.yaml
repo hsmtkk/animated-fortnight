@@ -2,7 +2,7 @@
 steps:
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     id: workflows
-    waitFor: ['randomgen', 'multiply']
+    waitFor: ['-']
     entrypoint: bash
     args:
       - update-workflows.sh
