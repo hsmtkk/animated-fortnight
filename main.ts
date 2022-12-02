@@ -63,6 +63,7 @@ class MyStack extends TerraformStack {
   
       new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_iam_binding`, {
         cloudFunction: my_function.name,
+        location: region,
         members: [`serviceAccount:${my_service_account.email}`],
         role: 'roles/cloudfunctions.invoker',
       });
