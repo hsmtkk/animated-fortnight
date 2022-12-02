@@ -40,6 +40,7 @@ func multiply(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		log.Fatalf("json.Marshal failed; %v", err.Error())
 	}
+	log.Printf("response: %v\n", string(respBytes))
 	w.WriteHeader(http.StatusOK)
 	w.Write(respBytes)
 }

@@ -19,12 +19,13 @@ type response struct {
 
 func randomGen(w http.ResponseWriter, r *http.Request) {
 	value := rand.Intn(100) + 1
-	resp, err := json.Marshal(response{Random: value})
+	respBytes, err := json.Marshal(response{Random: value})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		log.Fatalf("json.Marshal failed; %v", err.Error())
 	}
+	log.Printf("response: %v\n", string(respBytes))
 	w.WriteHeader(http.StatusOK)
-	w.Write(resp)
+	w.Write(respBytes)
 }
