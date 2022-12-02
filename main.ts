@@ -30,18 +30,18 @@ class MyStack extends TerraformStack {
 
     for(const service of ['randomgen', 'multiply']){
 
-      const my_asset = new TerraformAsset(this, 'my_asset', {
+      const my_asset = new TerraformAsset(this, `${service}_asset`, {
         path: path.resolve(service),
         type: AssetType.ARCHIVE,
       });
   
-      const my_object = new google.storageBucketObject.StorageBucketObject(this, 'my_object', {
+      const my_object = new google.storageBucketObject.StorageBucketObject(this, `${service}_object`, {
         bucket: my_bucket.name,
         name: `${my_asset.assetHash}.zip`,
         source: my_asset.path,
       });
   
-      new google.cloudfunctions2Function.Cloudfunctions2Function(this, 'my_function', {
+      new google.cloudfunctions2Function.Cloudfunctions2Function(this, `${service}_function`, {
         buildConfig: {
           entryPoint: service,
           runtime: 'go119',
