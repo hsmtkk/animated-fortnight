@@ -1,3 +1,4 @@
+---
 - randomgen_function:
     call: http.get
     args:

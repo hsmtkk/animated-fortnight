@@ -5,4 +5,4 @@ multiply_url=`gcloud functions describe multiply --format json --gen2 --region a
 sed -i 's|var_randomgen_url|${randomgen_url}|' workflows.yaml
 sed -i 's|var_multiply_url|${multiply_url}|' workflows.yaml
 cat workflows.yaml
-gcloud workflows deploy my-workflows --source workflows.yaml
+gcloud workflows deploy my-workflows --region asia-northeast1 --source workflows.yaml
