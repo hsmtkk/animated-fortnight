@@ -62,7 +62,7 @@ class MyStack extends TerraformStack {
       });
   
       new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_functions_iam_binding`, {
-        cloudFunction: service,
+        cloudFunction: my_function.name,
         location: region,
         members: [`serviceAccount:${my_service_account.email}`],
         role: 'roles/cloudfunctions.invoker',
@@ -72,7 +72,7 @@ class MyStack extends TerraformStack {
         location: region,
         members: [`serviceAccount:${my_service_account.email}`],
         role: 'roles/run.invoker',
-        service: service,
+        service: my_function.name,
       });
 
     }
