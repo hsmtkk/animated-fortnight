@@ -11,5 +11,12 @@
         body:
             input: ${json.decode(randomgen_result.body).random}
     result: multiply_result
+- log_function:
+    call: http.get
+    args:
+        url: https://api.mathjs.org/v4/
+        query:
+            expr: ${"log(" + string(json.decode(multiply_result.body).multiplied) + ")"}
+    result: log_result
 - return_result:
-    return: ${multiply_result}
+    return: ${log_result}
