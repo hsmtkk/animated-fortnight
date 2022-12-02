@@ -18,5 +18,12 @@
         query:
             expr: ${"log(" + string(json.decode(multiply_result.body).multiplied) + ")"}
     result: log_result
+- floor_function:
+    call: http.post
+    args:
+        url: var_floor_url
+        body:
+            input: ${log_result.body}
+    result: floor_result
 - return_result:
-    return: ${log_result}
+    return: ${floor_result}

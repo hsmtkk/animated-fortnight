@@ -35,7 +35,7 @@ class MyStack extends TerraformStack {
       }],
     });
 
-    for(const service of ['randomgen', 'multiply']){
+    for(const service of ['randomgen', 'multiply', 'floor']){
 
       const my_asset = new TerraformAsset(this, `${service}_asset`, {
         path: path.resolve(service),
