@@ -1,39 +1,8 @@
 ---
 steps:
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-    id: randomgen
-    waitFor: ['-']
-    entrypoint: gcloud
-    args:
-      - functions
-      - deploy
-      - randomgen
-      - --gen2
-      - --region
-      - ${_REGION}
-      - --source
-      - randomgen
-
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-    id: multiply
-    waitFor: ['-']
-    entrypoint: gcloud
-    args:
-      - functions
-      - deploy
-      - multiply
-      - --gen2
-      - --region
-      - ${_REGION}
-      - --source
-      - multiply
-
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     id: workflows
     waitFor: ['randomgen', 'multiply']
     entrypoint: bash
     args:
       - update-workflows.sh
-
-substitutions:
-  _REGION: asia-northeast1
