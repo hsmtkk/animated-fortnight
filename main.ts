@@ -61,8 +61,13 @@ class MyStack extends TerraformStack {
         },
       });
   
-
     }
+
+    new google.workflowsWorkflow.WorkflowsWorkflow(this, 'my_workflow', {
+      name: 'my-workflow',
+      serviceAccount: my_service_account.id,
+    });
+
   }
 }
 
