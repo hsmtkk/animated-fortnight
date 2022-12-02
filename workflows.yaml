@@ -9,7 +9,7 @@
     args:
         url: var_multiply_url
         body:
-            input: ${randomgen_result.body.random}
+            input: ${json.decode(randomgen_result.body).random}
     result: multiply_result
 - return_result:
     return: ${multiply_result}
