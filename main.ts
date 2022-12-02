@@ -28,6 +28,13 @@ class MyStack extends TerraformStack {
       displayName: 'service account for this application',
     });
 
+    const run_allusers_data = new google.dataGoogleIamPolicy.DataGoogleIamPolicy(this, 'run_allusers_data', {
+      binding: [{
+        members: ['allUsers'],
+        role: 'roles/run.invoker',
+      }],
+    });
+
     for(const service of ['randomgen', 'multiply']){
 
       const my_asset = new TerraformAsset(this, `${service}_asset`, {
@@ -61,17 +68,9 @@ class MyStack extends TerraformStack {
         },
       });
   
-      new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_functions_iam_binding`, {
-        cloudFunction: my_function.name,
+      new google.cloudRunServiceIamPolicy.CloudRunServiceIamPolicy(this, `${service}_iam_policy`, {
         location: region,
-        members: [`serviceAccount:${my_service_account.email}`],
-        role: 'roles/cloudfunctions.invoker',
-      });
-
-      new google.cloudRunServiceIamBinding.CloudRunServiceIamBinding(this, `${service}_run_iam_binding`, {
-        location: region,
-        members: [`serviceAccount:${my_service_account.email}`],
-        role: 'roles/run.invoker',
+        policyData: run_allusers_data.policyData,
         service: my_function.name,
       });
 
