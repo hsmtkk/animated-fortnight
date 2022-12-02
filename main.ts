@@ -61,11 +61,18 @@ class MyStack extends TerraformStack {
         },
       });
   
-      new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_iam_binding`, {
-        cloudFunction: my_function.name,
+      new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_functions_iam_binding`, {
+        cloudFunction: service,
         location: region,
         members: [`serviceAccount:${my_service_account.email}`],
         role: 'roles/cloudfunctions.invoker',
+      });
+
+      new google.cloudRunServiceIamBinding.CloudRunServiceIamBinding(this, `${service}_run_iam_binding`, {
+        location: region,
+        members: [`serviceAccount:${my_service_account.email}`],
+        role: 'roles/run.invoker',
+        service: service,
       });
 
     }
