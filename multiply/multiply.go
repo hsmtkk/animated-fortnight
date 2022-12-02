@@ -42,5 +42,6 @@ func multiply(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("response: %v\n", string(respBytes))
 	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(respBytes)
 }
