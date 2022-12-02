@@ -41,7 +41,7 @@ class MyStack extends TerraformStack {
         source: my_asset.path,
       });
   
-      new google.cloudfunctions2Function.Cloudfunctions2Function(this, `${service}_function`, {
+      const my_function = new google.cloudfunctions2Function.Cloudfunctions2Function(this, `${service}_function`, {
         buildConfig: {
           entryPoint: service,
           runtime: 'go119',
@@ -61,6 +61,12 @@ class MyStack extends TerraformStack {
         },
       });
   
+      new google.cloudfunctions2FunctionIamBinding.Cloudfunctions2FunctionIamBinding(this, `${service}_iam_binding`, {
+        cloudFunction: my_function.name,
+        members: [`serviceAccount:${my_service_account.email}`],
+        role: 'roles/cloudfunctions.invoker',
+      });
+
     }
 
     new google.cloudbuildTrigger.CloudbuildTrigger(this, 'my_build_trigger', {
